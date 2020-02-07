@@ -5,7 +5,14 @@ import {
   Switch
 } from 'react-router-dom';
 
+import {
+  ABOUT_PAGE,
+  CONTACT_PAGE,
+  ERROR_PAGE
+} from './constants/routes';
+
 import About from './pages/About';
+import Contacts from './pages/Contacts';
 import Error404 from './pages/Error404';
 
 import Layout from './components/Layout';
@@ -18,11 +25,16 @@ function App() {
           <Route
             component={About}
             exact
-            path="/about"
+            path={ABOUT_PAGE}
+          />
+          <Route
+            component={Contacts}
+            exact
+            path={CONTACT_PAGE}
           />
           <Route
             component={Error404}
-            path="*"
+            path={ERROR_PAGE}
           />
         </Switch>
       </Layout>
