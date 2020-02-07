@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 
 import LINKS from './../../constants/links';
+
+// const NAV_LINKS = [];
 
 function Header({ location }) {
   const getNavItemClass = (path) => {
@@ -29,13 +31,13 @@ function Header({ location }) {
             >
               <ul className="navbar-nav mr-auto">
                 <li className={getNavItemClass(LINKS.HOME)}>
-                  <Link
+                  <NavLink
                     className="nav-link"
                     exact
                     to={LINKS.HOME}
                   >
                     Главная
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className={getNavItemClass(LINKS.CATALOG)}>
                   <Link
