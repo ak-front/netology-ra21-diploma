@@ -10,8 +10,6 @@ import Error404 from './pages/Error404';
 
 import Layout from './components/Layout';
 
-import './App.css';
-
 function App() {
   return (
     <Router>
@@ -19,7 +17,7 @@ function App() {
         <Switch>
           <Route
             component={About}
-            // exact
+            exact
             path="/about"
           />
           <Route
