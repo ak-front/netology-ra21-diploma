@@ -6,7 +6,7 @@ function Banner({
   title
 }) {
   return (
-    <div class="banner">
+    <div className="banner">
       {image && (
         <img
           alt={title}
@@ -15,7 +15,7 @@ function Banner({
         />
       )}
       {title && (
-        <h2 class="banner-header">{title}</h2>
+        <h2 className="banner-header">{title}</h2>
       )}
     </div>
   );

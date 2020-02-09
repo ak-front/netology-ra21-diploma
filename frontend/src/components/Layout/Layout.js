@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Banner from './../Banner';
+import Footer from './../Footer';
 import Header from './../Header';
 
 function Layout({ children }) {
@@ -19,6 +20,7 @@ function Layout({ children }) {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

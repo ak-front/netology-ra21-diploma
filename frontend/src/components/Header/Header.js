@@ -4,7 +4,20 @@ import { Link, NavLink, withRouter } from 'react-router-dom';
 
 import LINKS from './../../constants/links';
 
-// const NAV_LINKS = [];
+const navLinks = [{
+  exact: true,
+  link: LINKS.HOME,
+  title: 'Главная'
+}, {
+  link: LINKS.CATALOG,
+  title: 'Каталог'
+}, {
+  link: LINKS.ABOUT,
+  title: 'О магазине'
+}, {
+  link: LINKS.CONTACTS,
+  title: 'Контакты'
+}];
 
 function Header({ location }) {
   const getNavItemClass = (path) => {
@@ -30,39 +43,34 @@ function Header({ location }) {
               id="navbarMain"
             >
               <ul className="navbar-nav mr-auto">
-                <li className={getNavItemClass(LINKS.HOME)}>
-                  <NavLink
-                    className="nav-link"
-                    exact
-                    to={LINKS.HOME}
+                {navLinks.map(link => (link.exact ? (
+                  <li
+                    className={getNavItemClass(link.link)}
+                    key={link.link}
                   >
-                    Главная
-                  </NavLink>
-                </li>
-                <li className={getNavItemClass(LINKS.CATALOG)}>
-                  <Link
-                    className="nav-link"
-                    to={LINKS.CATALOG}
+                    <NavLink
+                      className="nav-link"
+                      exact
+                      title={link.title}
+                      to={link.link}
+                    >
+                      {link.title}
+                    </NavLink>
+                  </li>
+                ) : (
+                  <li
+                    className={getNavItemClass(link.link)}
+                    key={link.link}
                   >
-                    Каталог
-                  </Link>
-                </li>
-                <li className={getNavItemClass(LINKS.ABOUT)}>
-                  <Link
-                    className="nav-link"
-                    to={LINKS.ABOUT}
-                  >
-                    О магазине
-                  </Link>
-                </li>
-                <li className={getNavItemClass(LINKS.CONTACTS)}>
-                  <Link
-                    className="nav-link"
-                    to={LINKS.CONTACTS}
-                  >
-                    Контакты
-                  </Link>
-                </li>
+                    <Link
+                      className="nav-link"
+                      title={link.title}
+                      to={link.link}
+                    >
+                      {link.title}
+                    </Link>
+                  </li>
+                )))}
               </ul>
               <div>
                 <div className="header-controls-pics">
