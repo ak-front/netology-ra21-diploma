@@ -8,12 +8,14 @@ import {
 import {
   ABOUT_PAGE,
   CONTACT_PAGE,
-  ERROR_PAGE
+  ERROR_PAGE,
+  HOME_PAGE
 } from './constants/routes';
 
 import About from './pages/About';
 import Contacts from './pages/Contacts';
 import Error404 from './pages/Error404';
+import Home from './pages/Home';
 
 import Layout from './components/Layout';
 
@@ -31,6 +33,11 @@ function App() {
             component={Contacts}
             exact
             path={CONTACT_PAGE}
+          />
+          <Route
+            component={Home}
+            exact
+            path={HOME_PAGE}
           />
           <Route
             component={Error404}
