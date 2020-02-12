@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, NavLink, withRouter } from 'react-router-dom';
+import cn from 'classnames';
 
 import LINKS from './../../constants/links';
 
@@ -20,6 +21,25 @@ const navLinks = [{
 }];
 
 function Header({ location }) {
+  const searchInputRef = useRef();
+  const [isSearchFormOpen, setIsSearchFormOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchExpanderClick = () => {
+    setIsSearchFormOpen(prevIsSearchFormOpen => !prevIsSearchFormOpen);
+  };
+
+  const handleSearchFormSubmit = event => {
+    console.log('TODO: handleSearchFormSubmit');
+    event.preventDefault();
+  };
+
+  const handleSearchInputChange = event => {
+    const { value } = event.target;
+
+    setSearchQuery(value);
+  };
+
   const getNavItemClass = (path) => {
     return `nav-item${location.pathname === path ? ' active' : ''}`;
   };
@@ -74,15 +94,31 @@ function Header({ location }) {
               </ul>
               <div>
                 <div className="header-controls-pics">
-                  <div data-id="search-expander" className="header-controls-pic header-controls-search"></div>
+                  <div
+                    className="header-controls-pic header-controls-search"
+                    onClick={handleSearchExpanderClick}
+                  />
                   {/* <!-- Do programmatic navigation on click to /cart.html --> */}
                   <div className="header-controls-pic header-controls-cart">
                     <div className="header-controls-cart-full">1</div>
                     <div className="header-controls-cart-menu"></div>
                   </div>
                 </div>
-                <form data-id="search-form" className="header-controls-search-form form-inline invisible">
-                  <input className="form-control" placeholder="Поиск" />
+                <form
+                  className={cn(
+                    'header-controls-search-form',
+                    'form-inline',
+                    !isSearchFormOpen && 'invisible'
+                  )}
+                  onSubmit={handleSearchFormSubmit}
+                >
+                  <input
+                    ref={searchInputRef}
+                    className="form-control"
+                    placeholder="Поиск"
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                  />
                 </form>
               </div>
             </div>
