@@ -3,22 +3,22 @@ import PropTypes from 'prop-types';
 
 function ProductCard({
   id,
-  image,
-  name,
-  price
+  images,
+  price,
+  title
 }) {
   return (
     <div className="card catalog-item-card">
-      {image && (
+      {images[0] && (
         <img
           className="card-img-top img-fluid"
-          src={image}
-          alt={name}
+          src={images[0]}
+          alt={title}
         />
       )}
       <div className="card-body">
-        <p className="card-text">{name}</p>
-        <p className="card-text">{price}</p>
+        <p className="card-text">{title}</p>
+        <p className="card-text">{price.toLocaleString()}</p>
         <a
           className="btn btn-outline-primary"
           href={'#'}
@@ -31,10 +31,10 @@ function ProductCard({
 }
 
 ProductCard.propTypes = {
-  id: PropTypes.string.isRequired,
-  image: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  images: PropTypes.arrayOf(PropTypes.string).isRequired,
+  price: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired
 };
 
 export default ProductCard;
