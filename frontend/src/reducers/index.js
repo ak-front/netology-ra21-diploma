@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 
-import topSalesReducer from '../reducers/topSales';
+import catalogReducer from './catalog';
+import topSalesReducer from './topSales';
 
 const rootReducer = combineReducers({
+  catalog: catalogReducer,
   topSales: topSalesReducer
 });
 

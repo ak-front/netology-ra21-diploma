@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTopSales } from './../../actions/topSales';
 import ProductCard from './../ProductCard';
 
+// TODO: loading
 function TopSales() {
   const { items } = useSelector(state => state.topSales);
   const dispatch = useDispatch();
