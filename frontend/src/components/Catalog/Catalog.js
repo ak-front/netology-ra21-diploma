@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -6,10 +7,11 @@ import {
   fetchCatalogItems
 } from './../../actions/catalog';
 import CatalogCategories from './CatalogCategories';
+import CatalogSearch from './CatalogSearch';
 import ProductCard from './../ProductCard';
 
 // TODO: loading
-function Catalog() {
+function Catalog({ showSearch }) {
   const {
     categories,
     isItemsLoading,
@@ -35,13 +37,12 @@ function Catalog() {
     dispatch(fetchCatalogItems());
   }, [dispatch, selectedCategoryId]);
 
-  if (items.length === 0) {
-    return null;
-  }
-
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
+      {showSearch && (
+        <CatalogSearch />
+      )}
       <CatalogCategories
         items={[
           {
@@ -52,7 +53,7 @@ function Catalog() {
         ]}
         selectedCategoryId={selectedCategoryId}
       />
-      {items.length > 0 && (
+      {items.length > 0 ? (
         <div className="row">
           {items.map(item => (
             <div
@@ -68,6 +69,8 @@ function Catalog() {
             </div>
           ))}
         </div>
+      ) : (
+        <p className="h4 pt-5 mb-5 text-center">Товаров нет :(</p>
       )}
       {isMoreButtonVisible && (
         <div className="text-center">
@@ -83,5 +86,9 @@ function Catalog() {
     </section>
   );
 }
+
+Catalog.propTypes = {
+  showSearch: PropTypes.bool
+};
 
 export default Catalog;

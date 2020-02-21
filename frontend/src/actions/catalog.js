@@ -8,6 +8,7 @@ import {
   FETCH_CATALOG_ITEMS_REQUEST,
   FETCH_CATALOG_ITEMS_SUCCESS,
   SET_MORE_BUTTON_VISIBILITY,
+  SET_SEARCH_QUERY,
   SET_SELECTED_CATEGORY_ID
 } from './../constants/actionTypes';
 
@@ -60,11 +61,16 @@ export const fetchCatalogItems = offset => async (dispatch, getState) => {
   dispatch(fetchCatalogItemsRequest());
 
   try {
-    const { items, selectedCategoryId } = getState().catalog;
+    const {
+      items,
+      searchQuery,
+      selectedCategoryId
+    } = getState().catalog;
     const response = await axios.get(REACT_APP_API_CATALOG_ITEMS_URL, {
       params: {
         categoryId: selectedCategoryId || null,
-        offset: offset || null
+        offset: offset || null,
+        q: searchQuery || null
       }
     });
 
@@ -86,6 +92,11 @@ export const fetchCatalogItems = offset => async (dispatch, getState) => {
 export const setMoreButtonVisibility = isMoreButtonVisible => ({
   type: SET_MORE_BUTTON_VISIBILITY,
   payload: {isMoreButtonVisible}
+});
+
+export const setSearchQuery = searchQuery => ({
+  type: SET_SEARCH_QUERY,
+  payload: {searchQuery}
 });
 
 export const setSelectedCategoryId = selectedCategoryId => ({

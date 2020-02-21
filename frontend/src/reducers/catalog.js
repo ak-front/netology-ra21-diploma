@@ -6,6 +6,7 @@ import {
   FETCH_CATALOG_ITEMS_REQUEST,
   FETCH_CATALOG_ITEMS_SUCCESS,
   SET_MORE_BUTTON_VISIBILITY,
+  SET_SEARCH_QUERY,
   SET_SELECTED_CATEGORY_ID
 } from './../constants/actionTypes';
 
@@ -16,6 +17,7 @@ const initialState = {
   isItemsLoading: false,
   isMoreButtonVisible: true,
   items: [],
+  searchQuery: '',
   selectedCategoryId: 0
 };
 
@@ -85,6 +87,15 @@ const catalogReducer = (state = initialState, action) => {
       return {
         ...state,
         isMoreButtonVisible
+      };
+    }
+
+    case SET_SEARCH_QUERY: {
+      const { searchQuery } = action.payload;
+
+      return {
+        ...state,
+        searchQuery
       };
     }
 

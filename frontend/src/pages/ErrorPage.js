@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Error404() {
+function ErrorPage() {
   return (
     <section className="top-sales">
       <h2 className="text-center">Страница не найдена</h2>
@@ -9,4 +9,4 @@ function Error404() {
   );
 }
 
-export default Error404;
+export default ErrorPage;

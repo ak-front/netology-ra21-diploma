@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Contacts() {
+function ContactsPage() {
   return (
     <section className="top-sales">
       <h2 className="text-center">Контакты</h2>
@@ -12,4 +12,4 @@ function Contacts() {
   );
 }
 
-export default Contacts;
+export default ContactsPage;

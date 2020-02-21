@@ -1,6 +1,6 @@
 import React from 'react';
 
-function About() {
+function AboutPage() {
   return (
     <section className="top-sales">
       <h2 className="text-center">О магазине</h2>
@@ -19,4 +19,4 @@ function About() {
   );
 }
 
-export default About;
+export default AboutPage;

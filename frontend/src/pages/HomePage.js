@@ -3,7 +3,7 @@ import React from 'react';
 import Catalog from './../components/Catalog';
 import TopSales from './../components/TopSales';
 
-function Home() {
+function HomePage() {
   return (
     <div>
       <TopSales />
@@ -12,4 +12,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

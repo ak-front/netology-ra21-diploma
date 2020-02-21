@@ -7,15 +7,17 @@ import {
 
 import {
   ABOUT_PAGE,
+  CATALOG_PAGE,
   CONTACT_PAGE,
   ERROR_PAGE,
   HOME_PAGE
 } from './constants/routes';
 
-import About from './pages/About';
-import Contacts from './pages/Contacts';
-import Error404 from './pages/Error404';
-import Home from './pages/Home';
+import AboutPage from './pages/AboutPage';
+import CatalogPage from './pages/CatalogPage';
+import ContactsPage from './pages/ContactsPage';
+import ErrorPage from './pages/ErrorPage';
+import HomePage from './pages/HomePage';
 
 import Layout from './components/Layout';
 
@@ -25,22 +27,27 @@ function App() {
       <Layout>
         <Switch>
           <Route
-            component={About}
+            component={AboutPage}
             exact
             path={ABOUT_PAGE}
           />
           <Route
-            component={Contacts}
+            component={CatalogPage}
+            exact
+            path={CATALOG_PAGE}
+          />
+          <Route
+            component={ContactsPage}
             exact
             path={CONTACT_PAGE}
           />
           <Route
-            component={Home}
+            component={HomePage}
             exact
             path={HOME_PAGE}
           />
           <Route
-            component={Error404}
+            component={ErrorPage}
             path={ERROR_PAGE}
           />
         </Switch>
