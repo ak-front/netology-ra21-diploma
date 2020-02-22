@@ -1,19 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import cn from 'classnames';
-
-import { setSelectedCategoryId } from './../../actions/catalog';
 
 function CatalogCategoriesItem({
   id,
   isActive,
-  title
+  title,
+  onClick
 }) {
-  const dispatch = useDispatch();
-
   const handleClick = event => {
-    dispatch(setSelectedCategoryId(id));
+    onClick(id);
     event.preventDefault();
   };
 
@@ -34,6 +30,11 @@ CatalogCategoriesItem.propTypes = {
   id: PropTypes.number.isRequired,
   isActive: PropTypes.bool,
   title: PropTypes.string.isRequired,
+  onClick: PropTypes.func
+};
+
+CatalogCategoriesItem.defaultProps = {
+  onClick: () => null
 };
 
 export default CatalogCategoriesItem;

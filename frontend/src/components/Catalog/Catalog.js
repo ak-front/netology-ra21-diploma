@@ -1,25 +1,45 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import debounce from 'lodash/debounce';
 
 import {
   fetchCatalogCategories,
-  fetchCatalogItems
+  fetchCatalogItems,
+  setSearchQuery,
+  setSelectedCategoryId
 } from './../../actions/catalog';
 import CatalogCategories from './CatalogCategories';
 import CatalogSearch from './CatalogSearch';
 import ProductCard from './../ProductCard';
 
 // TODO: loading
-function Catalog({ showSearch }) {
+function Catalog({ hasSearch }) {
   const {
     categories,
     isItemsLoading,
     isMoreButtonVisible,
     items,
+    searchQuery,
     selectedCategoryId
   } = useSelector(state => state.catalog);
+  const isMountedRef = useRef();
   const dispatch = useDispatch();
+  const debouncedFetchItems = useCallback(
+    debounce(() => dispatch(fetchCatalogItems()), 400),
+    []
+  );
+  const categoriesItems = [
+    {
+      id: 0,
+      title: 'Все'
+    },
+    ...categories
+  ];
+
+  const handleCategoriesItemClick = id => {
+    dispatch(setSelectedCategoryId(id));
+  };
 
   const handleMoreButtonClick = event => {
     if (!isItemsLoading) {
@@ -27,31 +47,45 @@ function Catalog({ showSearch }) {
     }
 
     event.preventDefault();
-  }
+  };
+
+  const handleSearchSubmit = () => {
+    dispatch(fetchCatalogItems());
+  };
 
   useEffect(() => {
+    if (!hasSearch && searchQuery !== '') {
+      dispatch(setSearchQuery(''));
+    }
+
+    dispatch(setSelectedCategoryId(categoriesItems[0].id))
     dispatch(fetchCatalogCategories());
   }, [dispatch]);
 
   useEffect(() => {
+    if (hasSearch && isMountedRef.current) {
+      debouncedFetchItems();
+    }
+  }, [debouncedFetchItems, searchQuery]);
+
+  useEffect(() => {
     dispatch(fetchCatalogItems());
+
+    if (!isMountedRef.current) {
+      isMountedRef.current = true;
+    }
   }, [dispatch, selectedCategoryId]);
 
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
-      {showSearch && (
-        <CatalogSearch />
+      {hasSearch && (
+        <CatalogSearch onSubmit={handleSearchSubmit} />
       )}
       <CatalogCategories
-        items={[
-          {
-            id: 0,
-            title: 'Все'
-          },
-          ...categories
-        ]}
+        items={categoriesItems}
         selectedCategoryId={selectedCategoryId}
+        onItemClick={handleCategoriesItemClick}
       />
       {items.length > 0 ? (
         <div className="row">
@@ -88,7 +122,7 @@ function Catalog({ showSearch }) {
 }
 
 Catalog.propTypes = {
-  showSearch: PropTypes.bool
+  hasSearch: PropTypes.bool
 };
 
 export default Catalog;

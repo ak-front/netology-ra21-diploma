@@ -1,8 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link, NavLink, withRouter } from 'react-router-dom';
+import { Link, NavLink, withRouter, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 
+import { setSearchQuery as setSearchQueryAction } from './../../actions/catalog';
 import LINKS from './../../constants/links';
 
 const navLinks = [{
@@ -24,13 +26,25 @@ function Header({ location }) {
   const searchInputRef = useRef();
   const [isSearchFormOpen, setIsSearchFormOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const submitSearchForm = () => {
+    if (searchQuery !== '') {
+      dispatch(setSearchQueryAction(searchQuery));
+      history.push('/catalog');
+      setSearchQuery('');
+    }
+  };
 
   const handleSearchExpanderClick = () => {
+    submitSearchForm();
     setIsSearchFormOpen(prevIsSearchFormOpen => !prevIsSearchFormOpen);
   };
 
   const handleSearchFormSubmit = event => {
-    console.log('TODO: handleSearchFormSubmit');
+    submitSearchForm();
+    setIsSearchFormOpen(false);
     event.preventDefault();
   };
 
@@ -43,6 +57,12 @@ function Header({ location }) {
   const getNavItemClass = (path) => {
     return `nav-item${location.pathname === path ? ' active' : ''}`;
   };
+
+  useEffect(() => {
+    if (isSearchFormOpen) {
+      searchInputRef.current.focus();
+    }
+  }, [isSearchFormOpen]);
 
   return (
     <header className="container">

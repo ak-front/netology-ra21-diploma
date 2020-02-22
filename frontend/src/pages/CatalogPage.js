@@ -3,7 +3,7 @@ import Catalog from './../components/Catalog';
 
 function CatalogPage() {
   return (
-    <Catalog showSearch={true} />
+    <Catalog hasSearch={true} />
   );
 }
 

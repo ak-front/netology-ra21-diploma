@@ -5,7 +5,8 @@ import CatalogCategoriesItem from './CatalogCategoriesItem';
 
 function CatalogCategories({
   items,
-  selectedCategoryId
+  selectedCategoryId,
+  onItemClick
 }) {
   const isActive = id => selectedCategoryId === id;
 
@@ -21,6 +22,7 @@ function CatalogCategories({
           isActive={isActive(item.id)}
           key={item.id}
           title={item.title}
+          onClick={onItemClick}
         />
       ))}
     </ul>
@@ -33,6 +35,11 @@ CatalogCategories.propTypes = {
     title: PropTypes.string.isRequired,
   })).isRequired,
   selectedCategoryId: PropTypes.number,
+  onItemClick: PropTypes.func
+};
+
+CatalogCategories.defaultProps = {
+  onItemClick: () => null
 };
 
 export default CatalogCategories;

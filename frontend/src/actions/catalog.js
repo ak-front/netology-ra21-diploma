@@ -1,4 +1,5 @@
 import axios from 'axios';
+import isFunction from 'lodash/isFunction';
 
 import {
   FETCH_CATALOG_CATEGORIES_ERROR,
@@ -16,6 +17,9 @@ const {
   REACT_APP_API_CATALOG_CATEGORIES_URL,
   REACT_APP_API_CATALOG_ITEMS_URL
 } = process.env;
+
+const CancelToken = axios.CancelToken;
+let cancelFetchCatalogItems;
 
 export const fetchCatalogCategoriesError = error => ({
   type: FETCH_CATALOG_CATEGORIES_ERROR,
@@ -66,7 +70,15 @@ export const fetchCatalogItems = offset => async (dispatch, getState) => {
       searchQuery,
       selectedCategoryId
     } = getState().catalog;
+
+    if (isFunction(cancelFetchCatalogItems)) {
+      cancelFetchCatalogItems();
+    }
+
     const response = await axios.get(REACT_APP_API_CATALOG_ITEMS_URL, {
+      cancelToken: new CancelToken(function executor(c) {
+        cancelFetchCatalogItems = c;
+      }),
       params: {
         categoryId: selectedCategoryId || null,
         offset: offset || null,
