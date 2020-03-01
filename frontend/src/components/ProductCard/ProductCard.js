@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
+import LINKS from './../../constants/links';
 
 function ProductCard({
   id,
@@ -19,12 +22,12 @@ function ProductCard({
       <div className="card-body">
         <p className="card-text">{title}</p>
         <p className="card-text">{price.toLocaleString()}</p>
-        <a
+        <Link
           className="btn btn-outline-primary"
-          href={'#'}
+          to={`${LINKS.CATALOG}/${id}`}
         >
           Заказать
-        </a>
+        </Link>
       </div>
     </div>
   );

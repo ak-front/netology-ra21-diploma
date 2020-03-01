@@ -6,6 +6,7 @@ import cn from 'classnames';
 
 import { setSearchQuery as setSearchQueryAction } from './../../actions/catalog';
 import LINKS from './../../constants/links';
+import HeaderCartControl from './HeaderCartControl';
 
 const navLinks = [{
   exact: true,
@@ -32,7 +33,7 @@ function Header({ location }) {
   const submitSearchForm = () => {
     if (searchQuery !== '') {
       dispatch(setSearchQueryAction(searchQuery));
-      history.push('/catalog');
+      history.push(LINKS.CATALOG);
       setSearchQuery('');
     }
   };
@@ -118,11 +119,7 @@ function Header({ location }) {
                     className="header-controls-pic header-controls-search"
                     onClick={handleSearchExpanderClick}
                   />
-                  {/* <!-- Do programmatic navigation on click to /cart.html --> */}
-                  <div className="header-controls-pic header-controls-cart">
-                    <div className="header-controls-cart-full">1</div>
-                    <div className="header-controls-cart-menu"></div>
-                  </div>
+                  <HeaderCartControl />
                 </div>
                 <form
                   className={cn(
@@ -146,11 +143,11 @@ function Header({ location }) {
         </div>
       </div>
     </header>
-  )
+  );
 }
 
 Header.propTypes = {
   location: PropTypes.object.isRequired
-}
+};
 
 export default withRouter(Header);

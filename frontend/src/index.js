@@ -4,11 +4,14 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 import App from './App';
+import CartProvider from './components/CartProvider';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <CartProvider>
+      <App />
+    </CartProvider>
   </Provider>,
   document.getElementById('root')
 );

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { CancelToken } from 'axios';
 import isFunction from 'lodash/isFunction';
 
 import {
@@ -18,7 +18,6 @@ const {
   REACT_APP_API_CATALOG_ITEMS_URL
 } = process.env;
 
-const CancelToken = axios.CancelToken;
 let cancelFetchCatalogItems;
 
 export const fetchCatalogCategoriesError = error => ({
