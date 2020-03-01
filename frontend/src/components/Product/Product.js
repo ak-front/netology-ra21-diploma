@@ -6,6 +6,7 @@ import axios from 'axios';
 import LINKS from './../../constants/links';
 import CartContext from './../../contexts/CartContext';
 
+import Preloader from './../Preloader';
 import ProductCount from './ProductCount';
 import ProductSizes from './ProductSizes';
 
@@ -66,15 +67,21 @@ function Product({ match }) {
     };
   }, []);
 
-  if (product === null) {
+  if (product === null && !isLoading) {
     return null;
+  }
+
+  if (isLoading) {
+    return (
+      <div className="py-5">
+        <Preloader />
+      </div>
+    );
   }
 
   const availableSizes = product.sizes.filter(size => size.avalible);
 
-  return (isLoading ? (
-    <div>Загрузка...</div>
-  ) : (
+  return (
     <section className="catalog-item">
       <h2 className="text-center">{product.title}</h2>
       <div className="row">
@@ -139,7 +146,7 @@ function Product({ match }) {
         </div>
       </div>
     </section>
-  ));
+  );
 }
 
 Product.propTypes = {
