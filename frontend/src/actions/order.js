@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { notifyError } from './../utils';
+
 const SUBMIT_ORDER_ERROR = 'SUBMIT_ORDER_ERROR';
 const SUBMIT_ORDER_REQUEST = 'SUBMIT_ORDER_REQUEST';
 const SUBMIT_ORDER_SUCCESS = 'SUBMIT_ORDER_SUCCESS';
@@ -38,5 +40,6 @@ export const submitOrder = (phone, address, products) => async (dispatch, getSta
     dispatch(submitOrderSuccess(response.data));
   } catch (error) {
     dispatch(submitOrderError(error));
+    notifyError(`При оформлении заказа произошла ошибка: ${error.message}`);
   }
 };

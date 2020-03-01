@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, useHistory } from 'react-router-dom';
-import axios from 'axios';
+import axios, { isCancel } from 'axios';
 
 import LINKS from './../../constants/links';
 import CartContext from './../../contexts/CartContext';
+import { notifyError } from './../../utils';
 
 import Preloader from './../Preloader';
 import ProductCount from './ProductCount';
@@ -52,7 +53,11 @@ function Product({ match }) {
         });
 
         setProduct(response.data);
-      } catch (error) {} finally {
+      } catch (error) {
+        if (!isCancel(error)) {
+          notifyError(`При загрузке данных товара произошла ошибка: ${error.message}`);
+        }
+      } finally {
         if (isSubscribed) {
           setIsLoading(false);
         }

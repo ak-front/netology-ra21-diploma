@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchTopSales } from './../../actions/topSales';
+import { notifyError } from './../../utils';
 import Preloader from './../Preloader';
 import ProductCard from './../ProductCard';
 
@@ -10,7 +11,8 @@ function TopSales() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchTopSales());
+    dispatch(fetchTopSales())
+      .catch(error => notifyError(`При подгрузке хитов продаж произошла ошибка: ${error}`));
   }, [dispatch]);
 
   if (items.length === 0 && !isLoading) {

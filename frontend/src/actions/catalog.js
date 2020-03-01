@@ -1,4 +1,4 @@
-import axios, { CancelToken } from 'axios';
+import axios, { CancelToken, isCancel } from 'axios';
 import isFunction from 'lodash/isFunction';
 
 import {
@@ -13,6 +13,7 @@ import {
   SET_SEARCH_QUERY,
   SET_SELECTED_CATEGORY_ID
 } from './../constants/actionTypes';
+import { notifyError } from './../utils';
 
 const {
   REACT_APP_API_CATALOG_CATEGORIES_URL,
@@ -44,6 +45,9 @@ export const fetchCatalogCategories = () => async (dispatch, getState) => {
     dispatch(fetchCatalogCategoriesSuccess(response.data));
   } catch (error) {
     dispatch(fetchCatalogCategoriesError(error));
+    notifyError(`При подгрузке категорий каталога произошла ошибка: ${error.message}`);
+
+    return Promise.reject(error.message);
   }
 };
 
@@ -102,6 +106,12 @@ export const fetchCatalogItems = offset => async (dispatch, getState) => {
   } catch (error) {
     fetchCatalogItemsRequestCount--;
     dispatch(fetchCatalogItemsError(error, fetchCatalogItemsRequestCount > 0));
+
+    if (!isCancel(error)) {
+      notifyError(`При подгрузке товаров каталога произошла ошибка: ${error.message}`);
+    }
+
+    return Promise.reject(error.message);
   }
 };
 
