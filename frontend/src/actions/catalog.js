@@ -46,9 +46,9 @@ export const fetchCatalogCategories = () => async (dispatch, getState) => {
   }
 };
 
-export const fetchCatalogItemsError = error => ({
+export const fetchCatalogItemsError = (error, isItemsLoading = false) => ({
   type: FETCH_CATALOG_ITEMS_ERROR,
-  payload: {error}
+  payload: {error, isItemsLoading}
 });
 
 export const fetchCatalogItemsRequest = () => ({
@@ -60,7 +60,13 @@ export const fetchCatalogItemsSuccess = items => ({
   payload: {items}
 });
 
+let fetchCatalogItemsRequestCount = 0;
 export const fetchCatalogItems = offset => async (dispatch, getState) => {
+  if (isFunction(cancelFetchCatalogItems)) {
+    cancelFetchCatalogItems();
+  }
+
+  fetchCatalogItemsRequestCount++
   dispatch(fetchCatalogItemsRequest());
 
   try {
@@ -69,10 +75,6 @@ export const fetchCatalogItems = offset => async (dispatch, getState) => {
       searchQuery,
       selectedCategoryId
     } = getState().catalog;
-
-    if (isFunction(cancelFetchCatalogItems)) {
-      cancelFetchCatalogItems();
-    }
 
     const response = await axios.get(REACT_APP_API_CATALOG_ITEMS_URL, {
       cancelToken: new CancelToken(function executor(c) {
@@ -94,9 +96,11 @@ export const fetchCatalogItems = offset => async (dispatch, getState) => {
       dispatch(fetchCatalogItemsSuccess(response.data));
     }
 
+    fetchCatalogItemsRequestCount--;
     dispatch(setMoreButtonVisibility(response.data.length >= 6));
   } catch (error) {
-    dispatch(fetchCatalogItemsError(error));
+    fetchCatalogItemsRequestCount--;
+    dispatch(fetchCatalogItemsError(error, fetchCatalogItemsRequestCount > 0));
   }
 };
 

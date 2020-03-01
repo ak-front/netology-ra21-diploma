@@ -53,12 +53,12 @@ const catalogReducer = (state = initialState, action) => {
     }
 
     case FETCH_CATALOG_ITEMS_ERROR: {
-      const { error } = action.payload;
+      const { error, isItemsLoading } = action.payload;
 
       return {
         ...state,
         error,
-        isItemsLoading: false
+        isItemsLoading
       };
     }
 
@@ -104,6 +104,7 @@ const catalogReducer = (state = initialState, action) => {
 
       return {
         ...state,
+        items: [],
         selectedCategoryId
       };
     }

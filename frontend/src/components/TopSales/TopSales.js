@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchTopSales } from './../../actions/topSales';
-import ProductCard from './../ProductCard';
 import Preloader from './../Preloader';
+import ProductCard from './../ProductCard';
 
 function TopSales() {
   const { items, isLoading } = useSelector(state => state.topSales);

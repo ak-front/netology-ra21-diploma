@@ -11,12 +11,13 @@ import {
 } from './../../actions/catalog';
 import CatalogCategories from './CatalogCategories';
 import CatalogSearch from './CatalogSearch';
+import Preloader from './../Preloader';
 import ProductCard from './../ProductCard';
 
-// TODO: loading
 function Catalog({ hasSearch }) {
   const {
     categories,
+    isCategoriesLoading,
     isItemsLoading,
     isMoreButtonVisible,
     items,
@@ -76,18 +77,32 @@ function Catalog({ hasSearch }) {
     }
   }, [dispatch, selectedCategoryId]);
 
+  if (
+    categories.length === 0
+    && items.length === 0
+    && !isCategoriesLoading
+    && !isItemsLoading
+  ) {
+    return null;
+  }
+
   return (
     <section className="catalog">
       <h2 className="text-center">Каталог</h2>
       {hasSearch && (
         <CatalogSearch onSubmit={handleSearchSubmit} />
       )}
-      <CatalogCategories
-        items={categoriesItems}
-        selectedCategoryId={selectedCategoryId}
-        onItemClick={handleCategoriesItemClick}
-      />
-      {items.length > 0 ? (
+      {categories.length > 0 && (
+        <CatalogCategories
+          items={categoriesItems}
+          selectedCategoryId={selectedCategoryId}
+          onItemClick={handleCategoriesItemClick}
+        />
+      )}
+      {isCategoriesLoading && !isItemsLoading && (
+        <Preloader />
+      )}
+      {items.length > 0 && (
         <div className="row">
           {items.map(item => (
             <div
@@ -103,10 +118,11 @@ function Catalog({ hasSearch }) {
             </div>
           ))}
         </div>
-      ) : (
+      )}
+      {items.length === 0 && !(isCategoriesLoading || isItemsLoading) && (
         <p className="h4 pt-5 mb-5 text-center">Товаров нет :(</p>
       )}
-      {isMoreButtonVisible && (
+      {!(isCategoriesLoading || isItemsLoading) && isMoreButtonVisible && (
         <div className="text-center">
           <button
             className="btn btn-outline-primary"
@@ -116,6 +132,9 @@ function Catalog({ hasSearch }) {
             Загрузить ещё
           </button>
         </div>
+      )}
+      {isItemsLoading && (
+        <Preloader />
       )}
     </section>
   );
