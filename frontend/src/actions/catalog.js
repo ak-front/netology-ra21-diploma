@@ -8,6 +8,7 @@ import {
   FETCH_CATALOG_ITEMS_ERROR,
   FETCH_CATALOG_ITEMS_REQUEST,
   FETCH_CATALOG_ITEMS_SUCCESS,
+  SET_ITEMS,
   SET_MORE_BUTTON_VISIBILITY,
   SET_SEARCH_QUERY,
   SET_SELECTED_CATEGORY_ID
@@ -103,6 +104,11 @@ export const fetchCatalogItems = offset => async (dispatch, getState) => {
     dispatch(fetchCatalogItemsError(error, fetchCatalogItemsRequestCount > 0));
   }
 };
+
+export const setItems = (items = []) => ({
+  type: SET_ITEMS,
+  payload: {items}
+});
 
 export const setMoreButtonVisibility = isMoreButtonVisible => ({
   type: SET_MORE_BUTTON_VISIBILITY,

@@ -6,6 +6,7 @@ import debounce from 'lodash/debounce';
 import {
   fetchCatalogCategories,
   fetchCatalogItems,
+  setItems,
   setSearchQuery,
   setSelectedCategoryId
 } from './../../actions/catalog';
@@ -27,7 +28,10 @@ function Catalog({ hasSearch }) {
   const isMountedRef = useRef();
   const dispatch = useDispatch();
   const debouncedFetchItems = useCallback(
-    debounce(() => dispatch(fetchCatalogItems()), 400),
+    debounce(() => {
+      dispatch(setItems([]));
+      dispatch(fetchCatalogItems());
+    }, 400),
     []
   );
   const categoriesItems = [
@@ -51,6 +55,7 @@ function Catalog({ hasSearch }) {
   };
 
   const handleSearchSubmit = () => {
+    dispatch(setItems([]));
     dispatch(fetchCatalogItems());
   };
 

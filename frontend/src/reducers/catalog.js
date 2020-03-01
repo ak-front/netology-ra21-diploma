@@ -5,6 +5,7 @@ import {
   FETCH_CATALOG_ITEMS_ERROR,
   FETCH_CATALOG_ITEMS_REQUEST,
   FETCH_CATALOG_ITEMS_SUCCESS,
+  SET_ITEMS,
   SET_MORE_BUTTON_VISIBILITY,
   SET_SEARCH_QUERY,
   SET_SELECTED_CATEGORY_ID
@@ -80,6 +81,15 @@ const catalogReducer = (state = initialState, action) => {
         items
       };
     }
+
+    case SET_ITEMS: {
+      const { items } = action.payload;
+
+      return {
+        ...state,
+        items
+      };
+    };
 
     case SET_MORE_BUTTON_VISIBILITY: {
       const { isMoreButtonVisible } = action.payload;
