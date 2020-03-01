@@ -3,38 +3,42 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchTopSales } from './../../actions/topSales';
 import ProductCard from './../ProductCard';
+import Preloader from './../Preloader';
 
-// TODO: loading
 function TopSales() {
-  const { items } = useSelector(state => state.topSales);
+  const { items, isLoading } = useSelector(state => state.topSales);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchTopSales());
   }, [dispatch]);
 
-  if (items.length === 0) {
+  if (items.length === 0 && !isLoading) {
     return null;
   }
 
   return (
     <section className="top-sales">
       <h2 className="text-center">Хиты продаж!</h2>
-      <div className="row">
-        {items.map(item => (
-          <div
-            className="col-4"
-            key={item.id}
-          >
-            <ProductCard
-              id={item.id}
-              images={item.images}
-              price={item.price}
-              title={item.title}
-            />
-          </div>
-        ))}
-      </div>
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <div className="row">
+          {items.map(item => (
+            <div
+              className="col-4"
+              key={item.id}
+            >
+              <ProductCard
+                id={item.id}
+                images={item.images}
+                price={item.price}
+                title={item.title}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
