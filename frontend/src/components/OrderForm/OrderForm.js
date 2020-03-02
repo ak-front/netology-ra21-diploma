@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import NumberFormat from 'react-number-format';
 
-import { submitOrder } from './../../actions/order';
+import { submitOrder } from './../../redux/modules/order/actions';
 import CartContext from './../../contexts/CartContext';
 import { notifyError, notifySuccess } from './../../utils';
 

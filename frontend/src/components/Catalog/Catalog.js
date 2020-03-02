@@ -9,7 +9,7 @@ import {
   setItems,
   setSearchQuery,
   setSelectedCategoryId
-} from './../../actions/catalog';
+} from './../../redux/modules/catalog/actions';
 import CatalogCategories from './CatalogCategories';
 import CatalogSearch from './CatalogSearch';
 import Preloader from './../Preloader';

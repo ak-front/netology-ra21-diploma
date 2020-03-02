@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-import { notifyError } from './../utils';
-
-const SUBMIT_ORDER_ERROR = 'SUBMIT_ORDER_ERROR';
-const SUBMIT_ORDER_REQUEST = 'SUBMIT_ORDER_REQUEST';
-const SUBMIT_ORDER_SUCCESS = 'SUBMIT_ORDER_SUCCESS';
+import {
+  SUBMIT_ORDER_ERROR,
+  SUBMIT_ORDER_REQUEST,
+  SUBMIT_ORDER_SUCCESS
+} from './types';
+import { notifyError } from './../../../utils';
 
 const { REACT_APP_API_ORDER_URL } = process.env;
 

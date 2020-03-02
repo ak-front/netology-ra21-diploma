@@ -4,7 +4,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
-import ReactNotification from 'react-notifications-component'
+import ReactNotification from 'react-notifications-component';
 
 import {
   ABOUT_PAGE,

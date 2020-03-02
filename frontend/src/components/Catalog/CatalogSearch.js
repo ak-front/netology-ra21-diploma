@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setSearchQuery } from './../../actions/catalog';
+import { setSearchQuery } from './../../redux/modules/catalog/actions';
 
 function CatalogSearch({ onSubmit }) {
   const { searchQuery } = useSelector(state => state.catalog);

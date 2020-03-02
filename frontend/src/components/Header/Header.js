@@ -4,7 +4,7 @@ import { Link, NavLink, withRouter, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 
-import { setSearchQuery as setSearchQueryAction } from './../../actions/catalog';
+import { setSearchQuery as setSearchQueryAction } from './../../redux/modules/catalog/actions';
 import LINKS from './../../constants/links';
 import HeaderCartControl from './HeaderCartControl';
 

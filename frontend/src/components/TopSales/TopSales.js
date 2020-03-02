@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchTopSales } from './../../actions/topSales';
+import { fetchTopSales } from './../../redux/modules/topSales/actions';
 import { notifyError } from './../../utils';
 import Preloader from './../Preloader';
 import ProductCard from './../ProductCard';

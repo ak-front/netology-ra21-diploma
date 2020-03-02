@@ -9,7 +9,7 @@ import {
   SET_MORE_BUTTON_VISIBILITY,
   SET_SEARCH_QUERY,
   SET_SELECTED_CATEGORY_ID
-} from './../constants/actionTypes';
+} from './types';
 
 const initialState = {
   categories: [],
